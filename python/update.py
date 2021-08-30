@@ -13,7 +13,7 @@ pmp.server = pmp.server.replace('mcm', 'pmp')
 
 
 def get_list_of_campaigns():
-    mc_aod_campaigns = mcm.get(('campaigns', query='prepid=*UL*RECO*'))
+    mc_aod_campaigns = mcm.get('campaigns', query='prepid=*UL*RECO*')
     mc_mini_campaigns = mcm.get('campaigns', query='prepid=*MiniAOD*')
     mc_nano_campaigns = mcm.get('campaigns', query='prepid=*NanoAOD*')
     print('%s AOD started campaigns' % (len(mc_aod_campaigns)))
