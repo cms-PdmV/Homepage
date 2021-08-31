@@ -31,7 +31,7 @@
         </div>
       </v-col>
     </v-row>
-    <small style="opacity: 0.4">For Monte Carlo production, only MiniAOD and NanoAOD campaigns are shown</small>
+    <small style="opacity: 0.4">For Monte Carlo production, only certain campaigns are shown</small>
     <v-dialog v-if="shareURL" v-model="shareURL" width="640">
       <v-card class="pt-2 pl-2 pr-2">
         <h2 class="ml-2 mr-2">Share Event Production plot</h2>
