@@ -145,7 +145,7 @@ def get_year_timestamps(year=None):
     return timestamps
 
 
-granularity = 500
+granularity = 1000
 priority_blocks = {
     'block0': '130000,',
     'block1': '110000,130000',
