@@ -7,8 +7,8 @@ sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
 from rest import McM
 
 
-mcm = McM(dev=False, cookie=os.getenv('PROD_COOKIE'))
-pmp = McM(dev=False, cookie=os.getenv('PROD_COOKIE'))
+mcm = McM(dev=False)
+pmp = McM(dev=False)
 pmp.server = pmp.server.replace('mcm', 'pmp')
 
 
@@ -175,6 +175,7 @@ all_timestamps['24_weeks'] = get_six_months_timestamps()
 all_timestamps['12_months'] = get_year_timestamps()
 all_timestamps['2019_monthly'] = get_year_timestamps(2019)
 all_timestamps['2020_monthly'] = get_year_timestamps(2020)
+all_timestamps['2021_monthly'] = get_year_timestamps(2021)
 
 for timestamp_name, timestamps in all_timestamps.items():
     # Split all campaigns into nice equal timestamps
