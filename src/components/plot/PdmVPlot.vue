@@ -105,6 +105,10 @@ export default {
       }
       axios.get(timeRange + '.json').then(response => {
         component.fetchedData = response.data;
+      }).catch(error => {
+        component.fetchedData = {'data': {}, 'timestamps': []};
+        const code = error.response ? error.response.status : '';
+        alert('Error ' + code + ' fetching "' + timeRange.replaceAll('_', ' ') + '" data');
       });
     },
     prepareData(filters) {

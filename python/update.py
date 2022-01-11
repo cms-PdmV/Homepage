@@ -3,6 +3,7 @@ import json
 import time
 import os
 import datetime
+import random
 sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
 from rest import McM
 
@@ -19,15 +20,20 @@ def get_list_of_campaigns():
     print('%s AOD started campaigns' % (len(mc_aod_campaigns)))
     print('%s MiniAOD started campaigns' % (len(mc_mini_campaigns)))
     print('%s NanoAOD started campaigns' % (len(mc_nano_campaigns)))
-    campaigns_with_submitted_requests = []
+    campaigns = []
     for campaign in mc_aod_campaigns + mc_mini_campaigns + mc_nano_campaigns:
         campaign_prepid = campaign['prepid']
-        campaigns_with_submitted_requests.append(campaign_prepid)
+        campaigns.append(campaign_prepid)
 
     rereco_campaigns = pmp._McM__get('api/objects?r=rereco_campaigns')
     print('%s ReReco campaigns' % (len(rereco_campaigns)))
-    campaigns_with_submitted_requests.extend(rereco_campaigns)
-    return campaigns_with_submitted_requests
+    campaigns.extend(rereco_campaigns)
+    if '--debug' in sys.argv:
+        random.shuffle(campaigns)
+        campaigns = campaigns[:15]
+        print('Picking %s random campaigns' % (len(campaigns)))
+
+    return campaigns
 
 
 def aggregate_data_points(data, timestamps):
@@ -173,10 +179,12 @@ all_timestamps['30_days'] = get_month_timestamps()
 all_timestamps['12_weeks'] = get_quarter_timestamps()
 all_timestamps['24_weeks'] = get_six_months_timestamps()
 all_timestamps['12_months'] = get_year_timestamps()
-all_timestamps['2019_monthly'] = get_year_timestamps(2019)
-all_timestamps['2020_monthly'] = get_year_timestamps(2020)
-all_timestamps['2021_monthly'] = get_year_timestamps(2021)
+# Get previous 2 years and current year as "monthly"
+now = datetime.datetime.now()
+for year in range(now.year - 2, now.year + 1):
+    all_timestamps[f'{year}_monthly'] = get_year_timestamps(year)
 
+print('Timestamp keys: %s' % (', '.join(list(all_timestamps.keys()))))
 for timestamp_name, timestamps in all_timestamps.items():
     # Split all campaigns into nice equal timestamps
     changes = {}

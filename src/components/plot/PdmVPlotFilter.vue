@@ -10,16 +10,15 @@
           </span>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <span v-for="block in dataFilters.blocks" :title="block.title" :key="block.title">
-            <v-checkbox
-              class="nomargin"
-              v-model="block.selected"
-              :key="block.name"
-              :label="block.displayName"
-            ></v-checkbox>
-          </span>
-          <v-btn small @click="setAll(dataFilters.blocks, true)" class="mr-2 primary">Select all</v-btn>
-          <v-btn small @click="setAll(dataFilters.blocks, false)" class="primary">Deselect all</v-btn>
+          <v-checkbox
+            class="nomargin"
+            v-for="block in dataFilters.blocks"
+            v-model="block.selected"
+            :key="block.title"
+            :label="block.displayName"
+          ></v-checkbox>
+          <v-btn small @click="setAll(dataFilters.blocks, true)" class="mr-2 mt-2 primary">Select all</v-btn>
+          <v-btn small @click="setAll(dataFilters.blocks, false)" class="mt-2 primary">Deselect all</v-btn>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
@@ -42,7 +41,7 @@
           <v-btn small @click="setAll(dataFilters.campaigns, true)" class="mr-2 mt-2 primary">Select all</v-btn>
           <v-btn small @click="setAll(dataFilters.campaigns, false)" class="mr-2 mt-2 primary">Deselect all</v-btn>
           <v-btn small @click="invert(dataFilters.campaigns)" class="mr-2 mt-2 primary">Invert all</v-btn>
-          <v-btn small @click="resetCampaigns(dataFilters.campaigns)" class="mt-2 primary">Reset</v-btn>
+          <v-btn small @click="resetCampaigns(dataFilters.campaigns)" class="primary">Reset</v-btn>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
@@ -55,7 +54,7 @@
           </span>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-row>
+          <v-row style="margin-top: 0; margin-bottom: 0">
             <v-col v-for="pwg in dataFilters.pwgs"
                    cols="6"
                    sm="4"
@@ -68,8 +67,8 @@
               ></v-checkbox>
             </v-col>
           </v-row>
-          <v-btn small @click="setAll(dataFilters.pwgs, true)" class="mr-2 primary">Select all</v-btn>
-          <v-btn small @click="setAll(dataFilters.pwgs, false)" class="primary">Deselect all</v-btn>
+          <v-btn small @click="setAll(dataFilters.pwgs, true)" class="mr-2 mt-2 primary">Select all</v-btn>
+          <v-btn small @click="setAll(dataFilters.pwgs, false)" class="mt-2 primary">Deselect all</v-btn>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
@@ -134,14 +133,8 @@
             <span title="Show last 12 months in 1 month intervals">
               <v-radio :key="'12_months'" :label="'12 months'" :value="'12_months'"></v-radio>
             </span>
-            <span title="Show 2019 in 1 month intervals">
-              <v-radio :key="'2019_monthly'" :label="'2019 monthly'" :value="'2019_monthly'"></v-radio>
-            </span>
-            <span title="Show 2020 in 1 month intervals">
-              <v-radio :key="'2020_monthly'" :label="'2020 monthly'" :value="'2020_monthly'"></v-radio>
-            </span>
-            <span title="Show 2021 in 1 month intervals">
-              <v-radio :key="'2021_monthly'" :label="'2021 monthly'" :value="'2021_monthly'"></v-radio>
+            <span v-for="year in years" :key="year + '_monthly'" :title="'Show ' + year + ' in 1 month intervals'">
+              <v-radio :key="year + '_monthly'" :label="year + ' monthly'" :value="year + '_monthly'"></v-radio>
             </span>
           </v-radio-group>
           <small style="opacity: 0.4">Changing time range will reset priority, campaign and PWG filters</small>
@@ -187,6 +180,7 @@ export default {
       initialPWGs: [],
       initializedFilters: false,
       previouslyShownCampaigns: [],
+      years: [],
     }
   },
   created () {
@@ -214,6 +208,8 @@ export default {
     } else {
       this.timeRange = 'week';
     }
+    const currentYear = new Date().getFullYear();
+    this.years = [currentYear - 2, currentYear - 1, currentYear];
   },
   props: {
     fetchedData: {
