@@ -140,6 +140,9 @@
             <span title="Show 2020 in 1 month intervals">
               <v-radio :key="'2020_monthly'" :label="'2020 monthly'" :value="'2020_monthly'"></v-radio>
             </span>
+            <span title="Show 2021 in 1 month intervals">
+              <v-radio :key="'2021_monthly'" :label="'2021 monthly'" :value="'2021_monthly'"></v-radio>
+            </span>
           </v-radio-group>
           <small style="opacity: 0.4">Changing time range will reset priority, campaign and PWG filters</small>
         </v-expansion-panel-content>
