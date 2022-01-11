@@ -7,8 +7,8 @@ sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
 from rest import McM
 
 
-mcm = McM(dev=False)
-pmp = McM(dev=False)
+mcm = McM(dev=False, cookie=os.getenv('PROD_COOKIE'))
+pmp = McM(dev=False, cookie=os.getenv('PROD_COOKIE'))
 pmp.server = pmp.server.replace('mcm', 'pmp')
 
 
