@@ -41,7 +41,7 @@
           <v-btn small @click="setAll(dataFilters.campaigns, true)" class="mr-2 mt-2 primary">Select all</v-btn>
           <v-btn small @click="setAll(dataFilters.campaigns, false)" class="mr-2 mt-2 primary">Deselect all</v-btn>
           <v-btn small @click="invert(dataFilters.campaigns)" class="mr-2 mt-2 primary">Invert all</v-btn>
-          <v-btn small @click="resetCampaigns(dataFilters.campaigns)" class="primary">Reset</v-btn>
+          <v-btn small @click="resetCampaigns(dataFilters.campaigns)" class="mr-2 mt-2 primary">Reset</v-btn>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
