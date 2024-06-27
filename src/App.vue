@@ -10,7 +10,7 @@
       <v-spacer></v-spacer>
       <v-btn
         text
-        href="https://cms-pdmv.cern.ch/mcm"
+        href="https://cms-pdmv-prod.web.cern.ch/mcm"
         target="_blank"
         class="d-none d-md-flex"
       >
@@ -19,7 +19,7 @@
       </v-btn>
       <v-btn
         text
-        href="https://cms-pdmv.cern.ch/pmp"
+        href="https://cms-pdmv-prod.web.cern.ch/pmp"
         target="_blank"
         class="d-none d-md-flex"
       >
@@ -37,7 +37,7 @@
       </v-btn>
       <v-btn
         text
-        href="https://cms-pdmv.cern.ch/valdb"
+        href="https://cms-pdmv-prod.web.cern.ch/valdb"
         target="_blank"
         class="d-none d-md-flex"
       >
@@ -46,7 +46,7 @@
       </v-btn>
       <v-btn
         text
-        href="https://cms-pdmv.cern.ch/relmon"
+        href="https://cms-pdmv-prod.web.cern.ch/relmon"
         target="_blank"
         class="d-none d-md-flex"
       >
