@@ -12,13 +12,13 @@
       <td style="text-align: left; word-break: break-all;" @mousedown="handleRowClick(campaignData)">{{campaignData.name}}</td>
       <td style="text-align: right;" @mousedown="handleRowClick(campaignData)" :title="campaignData.data.sum"><b>{{campaignData.data.niceSum}}</b></td>
       <td>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/present?r=' + campaignData.name + '&growingMode=true&mode=events&groupBy='">Present</a>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/historical?r=' + campaignData.name">Historical</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/present?r=' + campaignData.name + '&growingMode=true&mode=events&groupBy='">Present</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/historical?r=' + campaignData.name">Historical</a>
       </td>
       <td>
         <template v-if="campaignData.data.type !== 'rereco'">
           <span v-for="pwgName in campaignData.data.pwgs" :key="pwgName">
-            <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/mcm/requests?member_of_campaign=' + campaignData.name + '&pwg=' + pwgName">{{pwgName}}</a>
+            <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/mcm/requests?member_of_campaign=' + campaignData.name + '&pwg=' + pwgName">{{pwgName}}</a>
           </span>
         </template>
       </td>
@@ -27,24 +27,24 @@
       <td style="text-align: left; word-break: break-all;"><i>Total Monte Carlo</i></td>
       <td style="text-align: right;"><b>{{plotData.summary.monteCarloNiceSum}}</b></td>
       <td>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/present?r=' + monteCarloCampaigns + '&growingMode=true&mode=events&groupBy='">Present</a>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/historical?r=' + monteCarloCampaigns">Historical</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/present?r=' + monteCarloCampaigns + '&growingMode=true&mode=events&groupBy='">Present</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/historical?r=' + monteCarloCampaigns">Historical</a>
       </td>
     </tr>
     <tr style="opacity: 0.6" v-if="rows.length > 1 && plotData.summary.monteCarloSum > 0 && plotData.summary.rerecoSum > 0">
       <td style="text-align: left; word-break: break-all;"><i>Total Data ReReco</i></td>
       <td style="text-align: right;"><b>{{plotData.summary.rerecoNiceSum}}</b></td>
       <td>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/present?r=' + rerecoCampaigns + '&growingMode=true&mode=events&groupBy='">Present</a>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/historical?r=' + rerecoCampaigns">Historical</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/present?r=' + rerecoCampaigns + '&growingMode=true&mode=events&groupBy='">Present</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/historical?r=' + rerecoCampaigns">Historical</a>
       </td>
     </tr>
     <tr style="opacity: 0.6" v-if="rows.length > 1 && (plotData.summary.monteCarloSum > 0 || plotData.summary.rerecoSum > 0)">
       <td style="text-align: left; word-break: break-all;"><i>Total</i></td>
       <td style="text-align: right;"><b>{{plotData.summary.totalNiceSum}}</b></td>
       <td>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/present?r=' + allCampaigns + '&growingMode=true&mode=events&groupBy='">Present</a>
-        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv.cern.ch/pmp/historical?r=' + allCampaigns">Historical</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/present?r=' + allCampaigns + '&growingMode=true&mode=events&groupBy='">Present</a>
+        <a target="_blank" class="ml-1 mr-1" :href="'https://cms-pdmv-prod.web.cern.ch/pmp/historical?r=' + allCampaigns">Historical</a>
       </td>
     </tr>
   </table>
