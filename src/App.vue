@@ -28,11 +28,11 @@
       </v-btn>
       <v-btn
         text
-        href="https://hypernews.cern.ch/HyperNews/CMS/get/prep-ops.html"
+        href="https://cms-talk.web.cern.ch/c/ppd/pdmv/107"
         target="_blank"
         class="d-none d-md-flex"
       >
-        <span class="mr-2">HyperNews</span>
+        <span class="mr-2">CMS Talk</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
       <v-btn
