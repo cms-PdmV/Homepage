@@ -194,6 +194,12 @@ for year in range(now.year - 2, now.year + 1):
     all_timestamps[f'{year}_monthly'] = get_year_timestamps(year)
 
 print('Timestamp keys: %s' % (', '.join(list(all_timestamps.keys()))))
+
+# Create an output folder to store JSON files
+output_folder = Path().cwd() / Path("output")
+output_folder.mkdir(mode=0o700, exist_ok=True)
+print("Folder to store results: ", output_folder)
+
 for timestamp_name, timestamps in all_timestamps.items():
     # Split all campaigns into nice equal timestamps
     changes = {}
@@ -225,7 +231,7 @@ for timestamp_name, timestamps in all_timestamps.items():
 
     # print(json.dumps(changes, indent=4))
     if len(changes) > 0:
-        f = open(f'{timestamp_name}.json', 'w')
-        json.dump(changes, f)
+        with open(file=output_folder / Path(f"{timestamp_name}.json"), mode="w") as f:
+            json.dump(changes, f)
     else:
         print('No results?')
