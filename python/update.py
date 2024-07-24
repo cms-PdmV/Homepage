@@ -1,17 +1,26 @@
 import sys
 import json
 import time
-import os
 import datetime
 import random
-sys.path.append('/afs/cern.ch/cms/PPD/PdmV/tools/McM/')
+from pathlib import Path
 from rest import McM
+from rest.utils.shell import describe_platform
 
+# Create cookie files in the current execution folder
+mcm_cookie_path = Path().cwd() / Path(f"mcm-homepage-cookie")
+pmp_cookie_path = Path().cwd() / Path(f"pmp-homepage-cookie")
+print(f"Creating session cookies: McM ({str(mcm_cookie_path)}) - pMp ({str(pmp_cookie_path)})")
 
-mcm = McM(dev=False, cookie=os.getenv('PROD_COOKIE'))
-pmp = McM(dev=False, cookie=os.getenv('PROD_COOKIE'))
+# Create a client session for querying McM.
+mcm = McM(dev=False, cookie=mcm_cookie_path)
+
+# Also for pMp.
+pmp = McM(dev=False, cookie=pmp_cookie_path)
 pmp.server = pmp.server.replace('mcm', 'pmp')
-
+pmp.session.headers.update(
+    {"User-Agent": f"PdmV HTTP Client (pMp) for Homepage update: {describe_platform()}"}
+)
 
 def get_list_of_campaigns():
     mc_aod_campaigns = mcm.get('campaigns', query='prepid=*UL*RECO*')
@@ -25,7 +34,7 @@ def get_list_of_campaigns():
         campaign_prepid = campaign['prepid']
         campaigns.append(campaign_prepid)
 
-    rereco_campaigns = pmp._McM__get('api/objects?r=rereco_campaigns')
+    rereco_campaigns = pmp._get('api/objects?r=rereco_campaigns')
     print('%s ReReco campaigns' % (len(rereco_campaigns)))
     campaigns.extend(rereco_campaigns)
     if '--debug' in sys.argv:
@@ -168,7 +177,7 @@ campaign_list = get_list_of_campaigns()
 fetch_start = time.time()
 for i, campaign in enumerate(campaign_list):
     print('Getting %s from pMp, %s/%s' % (campaign, i + 1, len(campaign_list)))
-    campaigns[campaign] = pmp._McM__get('api/historical?r=%s&granularity=%s&aggregate=False' % (campaign, granularity))['results']['data']
+    campaigns[campaign] = pmp._get('api/historical?r=%s&granularity=%s&aggregate=False' % (campaign, granularity))['results']['data']
 
 fetch_end = time.time()
 print('Got %s campaigns in %.2fs' % (len(campaigns), fetch_end - fetch_start))
