@@ -22,6 +22,29 @@ pmp.session.headers.update(
     {"User-Agent": f"PdmV HTTP Client (pMp) for Homepage update: {describe_platform()}"}
 )
 
+def _pmp_get(pmp: McM, url: str) -> dict:
+    """Perform a GET query to the pMp api handling retrials."""
+    max_attempts = 5
+    delay_seconds = 5
+    full_url = f"{pmp.server}{url}"
+    last_exception = None
+    for i, _ in enumerate(range(max_attempts), start=1):
+        try:
+            response = pmp.session.get(url=full_url)
+            return response.json()
+        except Exception as e:
+            last_exception = e
+            print(
+                "(%s/%s) Unable to perform query (%s) - Status code (%s) - Exception (%s)"
+                % (i, max_attempts, full_url, response.status_code, e)
+            )
+            print("Response as text: %s", response.text)
+            print("Retrying in %s seconds..." % (delay_seconds))
+            time.sleep(delay_seconds)
+
+    # Unable to get a response in time!
+    raise last_exception
+
 def get_list_of_campaigns():
     mc_aod_campaigns = mcm.get('campaigns', query='prepid=*UL*RECO*')
     mc_mini_campaigns = mcm.get('campaigns', query='prepid=*MiniAOD*')
@@ -34,7 +57,7 @@ def get_list_of_campaigns():
         campaign_prepid = campaign['prepid']
         campaigns.append(campaign_prepid)
 
-    rereco_campaigns = pmp._get('api/objects?r=rereco_campaigns')
+    rereco_campaigns = _pmp_get(pmp, 'api/objects?r=rereco_campaigns')
     print('%s ReReco campaigns' % (len(rereco_campaigns)))
     campaigns.extend(rereco_campaigns)
     if '--debug' in sys.argv:
@@ -177,7 +200,8 @@ campaign_list = get_list_of_campaigns()
 fetch_start = time.time()
 for i, campaign in enumerate(campaign_list):
     print('Getting %s from pMp, %s/%s' % (campaign, i + 1, len(campaign_list)))
-    campaigns[campaign] = pmp._get('api/historical?r=%s&granularity=%s&aggregate=False' % (campaign, granularity))['results']['data']
+    campaign_historical_endpoint = 'api/historical?r=%s&granularity=%s&aggregate=False' % (campaign, granularity)
+    campaigns[campaign] = _pmp_get(pmp, campaign_historical_endpoint)['results']['data']
 
 fetch_end = time.time()
 print('Got %s campaigns in %.2fs' % (len(campaigns), fetch_end - fetch_start))
