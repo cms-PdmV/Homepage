@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This repository has been migrated to the PPD Technical Support team inside the CERN GitLab instance: [pdmv-homepage](https://gitlab.cern.ch/cms-ppd/technical-support/web-services/Homepage). Please open and follow issues directly there, do not open or follow them here!
+
 # PdmV Homepage
 
 Homepage of Physics Data And Monte Carlo Validation group in CMS experiment. Data is taken from pMp.
